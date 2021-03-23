@@ -1,6 +1,8 @@
 import paho.mqtt.client as mqtt
 import json
-    
+
+SubscriptionRoomList={}
+
 #Define mqtt callbacks
 #def on_log(client, userdata, level, buf):
     #Print logs
@@ -15,7 +17,8 @@ def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload,"utf-8"))
     
     #Write the message to the json file
-    SubscriptionRoomList[msg.topic] = msg.payload
+    global SubscriptionRoomList
+    SubscriptionRoomList[msg.topic] = str(msg.payload,"utf-8")
     try:
         f = open("data\SubscriptionList.json","wt")
         f.write(json.dumps(SubscriptionRoomList))
