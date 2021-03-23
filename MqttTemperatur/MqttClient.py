@@ -1,8 +1,5 @@
 import paho.mqtt.client as mqtt
 import json
-
-
-SubscriptionRoomList=""
     
 #Define mqtt callbacks
 #def on_log(client, userdata, level, buf):
@@ -28,16 +25,15 @@ client.connect("192.168.0.87")
 #Subscribe to topics
 try:
     #Topics aus json file auslesen
-    f = open("MqttTemperatur\data\SubscriptionList","rt")
+    f = open("data\SubscriptionList","rt")
     SubscriptionRoomList=json.loads(f.read())
-except:
-    print("error")
-finally:
     f.close()
-
-for topic in SubscriptionRoomList:
-    client.subscribe(topic)
-    print("Subscribed to Topic: "+ topic)
+    #Subscribe and print topics
+    for topic in SubscriptionRoomList:
+        client.subscribe(topic)
+        print("Subscribed to Topic: "+ topic)
+except:
+    print("error: Daten konnten nicht gelesen werden")
 
 #on message methode zum Client hinzufügen
 def on_message(client, userdata, msg):
@@ -49,10 +45,9 @@ def on_message(client, userdata, msg):
     try:
         f = open("MqttTemperatur\data\SubscriptionList","wt")
         f.write(json.dumps(SubscriptionRoomList))
+        f.close() 
     except:
         print("error")
-    finally:
-        f.close() 
 
 client.on_message=on_message
 
