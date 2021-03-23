@@ -15,7 +15,7 @@ testSubscriptions={
 
 
 try:
-    f = open("data\SubscriptionList","wt")
+    f = open("data\SubscriptionList.json","wt")
 
     f.write(json.dumps(testSubscriptions))
 

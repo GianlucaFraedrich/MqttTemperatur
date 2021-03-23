@@ -17,7 +17,7 @@ def on_message(client, userdata, msg):
     #Write the message to the json file
     SubscriptionRoomList[msg.topic] = msg.payload
     try:
-        f = open("data\SubscriptionList","wt")
+        f = open("data\SubscriptionList.json","wt")
         f.write(json.dumps(SubscriptionRoomList))
         f.close() 
     except:
@@ -27,6 +27,7 @@ def on_message(client, userdata, msg):
 client = mqtt.Client("PythonClient") #Sollte noch durch eine eindeutige ID ausgetauscht werden
 #client.on_log=on_log
 client.on_connect=on_connect
+client.on_message=on_message
 
 #Connect to Broker
 client.connect("192.168.0.87")
@@ -34,7 +35,7 @@ client.connect("192.168.0.87")
 #Subscribe to topics
 try:
     #Topics aus json file auslesen
-    f = open("data\SubscriptionList","rt")
+    f = open("data\SubscriptionList.json","rt")
     SubscriptionRoomList=json.loads(f.read())
     f.close()
     #Subscribe and print topics
@@ -43,11 +44,6 @@ try:
         print("Subscribed to Topic: "+ topic)
 except:
     print("error: Daten konnten nicht gelesen werden")
-
-#on message methode zum Client hinzufügen
-
-
-client.on_message=on_message
 
 #Client loop
 client.loop_forever()
