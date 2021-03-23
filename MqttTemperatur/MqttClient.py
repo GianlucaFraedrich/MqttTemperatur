@@ -6,18 +6,14 @@ import json
     #Print logs
 #   print("log: ",buf)
 
-
 def on_connect(client, userdata, flags, rc):
     #Print connection result code
     print("Connected with result code "+str(rc))
 
-
-
 #Create client instance
-client = mqtt.Client("PythonClient")
+client = mqtt.Client("PythonClient") #Sollte noch durch eine eindeutige ID ausgetauscht werden
 #client.on_log=on_log
 client.on_connect=on_connect
-
 
 #Connect to Broker
 client.connect("192.168.0.87")
@@ -43,14 +39,13 @@ def on_message(client, userdata, msg):
     #Write the message to the json file
     SubscriptionRoomList[msg.topic] = msg.payload
     try:
-        f = open("MqttTemperatur\data\SubscriptionList","wt")
+        f = open("data\SubscriptionList","wt")
         f.write(json.dumps(SubscriptionRoomList))
         f.close() 
     except:
         print("error")
 
 client.on_message=on_message
-
 
 #Client loop
 client.loop_forever()

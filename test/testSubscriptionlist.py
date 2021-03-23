@@ -15,7 +15,7 @@ testSubscriptions={
 
 
 try:
-    f = open("MqttTemperatur\data\SubscriptionList","wt")
+    f = open("data\SubscriptionList","wt")
 
     f.write(json.dumps(testSubscriptions))
 
