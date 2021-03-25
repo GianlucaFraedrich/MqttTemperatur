@@ -30,7 +30,6 @@ def on_message(client, userdata, msg):
     cursor.execute(sql, val)
     db.commit()
 
-
 #Establish SQL Connection
 db = mysql.connector.connect(
     host="localhost",

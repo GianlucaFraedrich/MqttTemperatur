@@ -1,3 +1,4 @@
+#Mqtt Client speichert die Daten in einer json Datei
 import paho.mqtt.client as mqtt
 import json
 
